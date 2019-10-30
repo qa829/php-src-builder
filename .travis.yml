@@ -294,3 +294,4 @@ addons:
       - libzip-dev
       - libgmp3-dev
       - expect
+      - libxml2-dev
