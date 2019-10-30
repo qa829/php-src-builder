@@ -304,3 +304,13 @@ addons:
       - libkrb5-dev
       - libldb-dev
       - libldap2-dev
+      - libtidy-dev
+      - libcurl4-openssl-dev
+      - libxpm-dev
+      - libmysqlclient-dev
+      - libpq-dev
+      - libicu-dev
+      - libxslt-dev
+      - libssl-dev
+      - libsasl2-dev
+      - libmcrypt-dev
