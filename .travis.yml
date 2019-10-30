@@ -296,3 +296,4 @@ addons:
       - expect
       - libxml2-dev
       - libjpeg-dev
+      - libpng-dev
