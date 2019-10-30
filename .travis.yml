@@ -295,3 +295,4 @@ addons:
       - libgmp3-dev
       - expect
       - libxml2-dev
+      - libjpeg-dev
