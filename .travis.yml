@@ -302,3 +302,5 @@ addons:
       - libreadline6-dev
       - libc-client-dev
       - libkrb5-dev
+      - libldb-dev
+      - libldap2-dev
