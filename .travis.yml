@@ -2,58 +2,58 @@ language: php
 
 jobs:
   include:
-    - dist: bionic
-      language: minimal
-      group: dev
-      env:
-        - RELEASE=bionic
-      name: bionic
-      php: '5.6'
-      before_install:
-        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
-        - sudo apt-get update
-        - sudo apt-get -y install libcurl4-openssl-dev
-        - sudo ln -s /usr/include/x86_64-linux-gnu/curl/ /usr/local/include
-        - command -v expect || sudo apt-get install expect
-        - |
-          if ! command -v phpenv; then
-            pushd $HOME
-            curl -L http://git.io/phpenv-installer | bash
-            popd
-            export PHPENV_ROOT="/home/travis/.phpenv"
-            if [ -d "${PHPENV_ROOT}" ]; then
-              export PATH="${PHPENV_ROOT}/bin:${PATH}"
-              eval "$(phpenv init -)"
-            fi
-          fi
-    - dist: xenial
-      group: edge
-      env:
-        - RELEASE=xenial
-      name: xenial
-      php: '5.6'
-      before_install:
-        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
-        - sudo apt-get update
-        - command -v expect || sudo apt-get install expect
-        - |
-          if ! command -v phpenv; then
-            pushd $HOME
-            curl -L http://git.io/phpenv-installer | bash
-            popd
-            export PHPENV_ROOT="/home/travis/.phpenv"
-            if [ -d "${PHPENV_ROOT}" ]; then
-              export PATH="${PHPENV_ROOT}/bin:${PATH}"
-              eval "$(phpenv init -)"
-            fi
-          fi
-
-    - services:
-        - docker
-      env:
-        - RELEASE=trusty
-      name: trusty
-      php: '5.6'
+    # - dist: bionic
+    #   language: minimal
+    #   group: dev
+    #   env:
+    #     - RELEASE=bionic
+    #   name: bionic
+    #   php: '5.6'
+    #   before_install:
+    #     - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+    #     - sudo apt-get update
+    #     - sudo apt-get -y install libcurl4-openssl-dev
+    #     - sudo ln -s /usr/include/x86_64-linux-gnu/curl/ /usr/local/include
+    #     - command -v expect || sudo apt-get install expect
+    #     - |
+    #       if ! command -v phpenv; then
+    #         pushd $HOME
+    #         curl -L http://git.io/phpenv-installer | bash
+    #         popd
+    #         export PHPENV_ROOT="/home/travis/.phpenv"
+    #         if [ -d "${PHPENV_ROOT}" ]; then
+    #           export PATH="${PHPENV_ROOT}/bin:${PATH}"
+    #           eval "$(phpenv init -)"
+    #         fi
+    #       fi
+    # - dist: xenial
+    #   group: edge
+    #   env:
+    #     - RELEASE=xenial
+    #   name: xenial
+    #   php: '5.6'
+    #   before_install:
+    #     - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+    #     - sudo apt-get update
+    #     - command -v expect || sudo apt-get install expect
+    #     - |
+    #       if ! command -v phpenv; then
+    #         pushd $HOME
+    #         curl -L http://git.io/phpenv-installer | bash
+    #         popd
+    #         export PHPENV_ROOT="/home/travis/.phpenv"
+    #         if [ -d "${PHPENV_ROOT}" ]; then
+    #           export PATH="${PHPENV_ROOT}/bin:${PATH}"
+    #           eval "$(phpenv init -)"
+    #         fi
+    #       fi
+    #
+    # - services:
+    #     - docker
+    #   env:
+    #     - RELEASE=trusty
+    #   name: trusty
+    #   php: '5.6'
     - arch: ppc64le
       dist: xenial
       language: minimal
@@ -297,3 +297,6 @@ addons:
       - libxml2-dev
       - libjpeg-dev
       - libpng-dev
+      - libbison-dev
+      - libfreetype6-dev
+      - libreadline6-dev
