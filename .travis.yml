@@ -300,3 +300,5 @@ addons:
       - libbison-dev
       - libfreetype6-dev
       - libreadline6-dev
+      - libc-client-dev
+      - libkrb5-dev
