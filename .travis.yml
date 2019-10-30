@@ -56,11 +56,115 @@ jobs:
       php: '5.6'
     - arch: ppc64le
       dist: xenial
-      group: edge
       language: minimal
       env:
         - RELEASE=xenial
       name: xenial-ppc64le
+      before_install:
+        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+        - sudo apt-get update
+        - command -v expect || sudo apt-get install expect
+        - |
+          if ! command -v phpenv; then
+            pushd $HOME
+            curl -L http://git.io/phpenv-installer | bash
+            popd
+            export PHPENV_ROOT="/home/travis/.phpenv"
+            if [ -d "${PHPENV_ROOT}" ]; then
+              export PATH="${PHPENV_ROOT}/bin:${PATH}"
+              eval "$(phpenv init -)"
+            fi
+          fi
+    - arch: ppc64le
+      dist: bionic
+      language: minimal
+      env:
+        - RELEASE=bionic
+      name: bionic-ppc64le
+      before_install:
+        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+        - sudo apt-get update
+        - command -v expect || sudo apt-get install expect
+        - |
+          if ! command -v phpenv; then
+            pushd $HOME
+            curl -L http://git.io/phpenv-installer | bash
+            popd
+            export PHPENV_ROOT="/home/travis/.phpenv"
+            if [ -d "${PHPENV_ROOT}" ]; then
+              export PATH="${PHPENV_ROOT}/bin:${PATH}"
+              eval "$(phpenv init -)"
+            fi
+          fi
+    - arch: s390x
+      dist: xenial
+      language: minimal
+      env:
+        - RELEASE=xenial
+      name: xenial-s390x
+      before_install:
+        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+        - sudo apt-get update
+        - command -v expect || sudo apt-get install expect
+        - |
+          if ! command -v phpenv; then
+            pushd $HOME
+            curl -L http://git.io/phpenv-installer | bash
+            popd
+            export PHPENV_ROOT="/home/travis/.phpenv"
+            if [ -d "${PHPENV_ROOT}" ]; then
+              export PATH="${PHPENV_ROOT}/bin:${PATH}"
+              eval "$(phpenv init -)"
+            fi
+          fi
+    - arch: s390x
+      dist: bionic
+      language: minimal
+      env:
+        - RELEASE=bionic
+      name: bionic-s390x
+      before_install:
+        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+        - sudo apt-get update
+        - command -v expect || sudo apt-get install expect
+        - |
+          if ! command -v phpenv; then
+            pushd $HOME
+            curl -L http://git.io/phpenv-installer | bash
+            popd
+            export PHPENV_ROOT="/home/travis/.phpenv"
+            if [ -d "${PHPENV_ROOT}" ]; then
+              export PATH="${PHPENV_ROOT}/bin:${PATH}"
+              eval "$(phpenv init -)"
+            fi
+          fi
+    - arch: arm64
+      dist: xenial
+      language: minimal
+      env:
+        - RELEASE=xenial
+      name: xenial-arm64
+      before_install:
+        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+        - sudo apt-get update
+        - command -v expect || sudo apt-get install expect
+        - |
+          if ! command -v phpenv; then
+            pushd $HOME
+            curl -L http://git.io/phpenv-installer | bash
+            popd
+            export PHPENV_ROOT="/home/travis/.phpenv"
+            if [ -d "${PHPENV_ROOT}" ]; then
+              export PATH="${PHPENV_ROOT}/bin:${PATH}"
+              eval "$(phpenv init -)"
+            fi
+          fi
+    - arch: arm64
+      dist: bionic
+      language: minimal
+      env:
+        - RELEASE=bionic
+      name: bionic-arm64
       before_install:
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
@@ -127,6 +231,14 @@ install:
       sudo ln /usr/include/powerpc64le-linux-gnu/gmp.h /usr/include/gmp.h
       sudo ln -s /usr/lib/powerpc64le-linux-gnu/libldap_r-2.4.so.2 /usr/lib/libldap_r.so
       sudo ln -s /usr/lib/powerpc64le-linux-gnu/liblber-2.4.so.2 /usr/lib/liblber.so
+    elif [[ $HOSTTYPE == "s390x" ]]; then
+      sudo ln /usr/include/s390x-linux-gnu/gmp.h /usr/include/gmp.h
+      sudo ln -s /usr/lib/s390x-linux-gnu/libldap_r-2.4.so.2 /usr/lib/libldap_r.so
+      sudo ln -s /usr/lib/s390x-linux-gnu/liblber-2.4.so.2 /usr/lib/liblber.so
+    elif [[ $HOSTTYPE == "aarch64" ]]; then
+      sudo ln /usr/include/aarch64-linux-gnu/gmp.h /usr/include/gmp.h
+      sudo ln -s /usr/lib/aarch64-linux-gnu/libldap_r-2.4.so.2 /usr/lib/libldap_r.so
+      sudo ln -s /usr/lib/aarch64-linux-gnu/liblber-2.4.so.2 /usr/lib/liblber.so
     else
       sudo ln /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h
       sudo ln -s /usr/lib/x86_64-linux-gnu/libldap_r.so /usr/lib/libldap_r.so
