@@ -60,9 +60,10 @@ jobs:
       language: minimal
       env:
         - RELEASE=xenial
-      name: xenial-ppc64le
+      name: xenial-arm64
       before_install:
         - __dots() { while true ; do echo -en . ; sleep 2 ; done } ; __dots &
+        - sleep 600
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
         - command -v expect || sudo apt-get install expect
@@ -83,10 +84,9 @@ jobs:
       language: minimal
       env:
         - RELEASE=xenial
-      name: xenial-arm64
+      name: xenial-ppc64le
       before_install:
         - __dots() { while true ; do echo -en . ; sleep 2 ; done } ; __dots &
-        - sleep 600
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
         - command -v expect || sudo apt-get install expect
