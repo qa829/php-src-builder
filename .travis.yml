@@ -2,36 +2,65 @@ language: php
 
 jobs:
   include:
-    - dist: bionic
-      language: minimal
-      group: dev
-      env:
-        - RELEASE=bionic
-      name: bionic
-      php: '5.6'
-      before_install:
-        - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
-        - sudo apt-get update
-        - sudo apt-get -y install libcurl4-openssl-dev
-        - sudo ln -s /usr/include/x86_64-linux-gnu/curl/ /usr/local/include
-        - command -v expect || sudo apt-get install expect
-        - |
-          if ! command -v phpenv; then
-            pushd $HOME
-            curl -L http://git.io/phpenv-installer | bash
-            popd
-            export PHPENV_ROOT="/home/travis/.phpenv"
-            if [ -d "${PHPENV_ROOT}" ]; then
-              export PATH="${PHPENV_ROOT}/bin:${PATH}"
-              eval "$(phpenv init -)"
-            fi
-          fi
-    - dist: xenial
+#     - dist: bionic
+#       language: minimal
+#       group: dev
+#       env:
+#         - RELEASE=bionic
+#       name: bionic
+#       php: '5.6'
+#       before_install:
+#         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+#         - sudo apt-get update
+#         - sudo apt-get -y install libcurl4-openssl-dev
+#         - sudo ln -s /usr/include/x86_64-linux-gnu/curl/ /usr/local/include
+#         - command -v expect || sudo apt-get install expect
+#         - |
+#           if ! command -v phpenv; then
+#             pushd $HOME
+#             curl -L http://git.io/phpenv-installer | bash
+#             popd
+#             export PHPENV_ROOT="/home/travis/.phpenv"
+#             if [ -d "${PHPENV_ROOT}" ]; then
+#               export PATH="${PHPENV_ROOT}/bin:${PATH}"
+#               eval "$(phpenv init -)"
+#             fi
+#           fi
+#     - dist: xenial
+#       group: edge
+#       env:
+#         - RELEASE=xenial
+#       name: xenial
+#       php: '5.6'
+#       before_install:
+#         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
+#         - sudo apt-get update
+#         - command -v expect || sudo apt-get install expect
+#         - |
+#           if ! command -v phpenv; then
+#             pushd $HOME
+#             curl -L http://git.io/phpenv-installer | bash
+#             popd
+#             export PHPENV_ROOT="/home/travis/.phpenv"
+#             if [ -d "${PHPENV_ROOT}" ]; then
+#               export PATH="${PHPENV_ROOT}/bin:${PATH}"
+#               eval "$(phpenv init -)"
+#             fi
+#           fi
+
+#     - services:
+#         - docker
+#       env:
+#         - RELEASE=trusty
+#       name: trusty
+#       php: '5.6'
+    - arch: arm64
+      dist: xenial
       group: edge
+      language: minimal
       env:
         - RELEASE=xenial
-      name: xenial
-      php: '5.6'
+      name: xenial-ppc64le
       before_install:
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
@@ -47,13 +76,6 @@ jobs:
               eval "$(phpenv init -)"
             fi
           fi
-
-    - services:
-        - docker
-      env:
-        - RELEASE=trusty
-      name: trusty
-      php: '5.6'
     - arch: ppc64le
       dist: xenial
       group: edge
@@ -137,11 +159,12 @@ install:
   fi
 
 before_script:
-- 'export LSB_RELEASE=${LSB_RELEASE:-$(lsb_release -rs || echo ${$(sw_vers -productVersion)%*.*})}'
-- 'export OS_NAME=${OS_NAME:-$(lsb_release -is | tr "A-Z" "a-z" || echo "osx")}'
-- 'export ARCH=${ARCH:-$(uname -m)}'
-- 'export INSTALL_DEST=${INSTALL_DEST:-$HOME/.phpenv/versions}'
+# - 'export LSB_RELEASE=${LSB_RELEASE:-$(lsb_release -rs || echo ${$(sw_vers -productVersion)%*.*})}'
+# - 'export OS_NAME=${OS_NAME:-$(lsb_release -is | tr "A-Z" "a-z" || echo "osx")}'
+# - 'export ARCH=${ARCH:-$(uname -m)}'
+# - 'export INSTALL_DEST=${INSTALL_DEST:-$HOME/.phpenv/versions}'
 - __dots() { while true ; do echo -en . ; sleep 30 ; done } ; __dots &
+-  sleep 600
 
 script:
   - cat $HOME/.php-build/share/php-build/default_configure_options
@@ -172,10 +195,10 @@ after_failure:
   - cat /tmp/php-build.*.log
 
 addons:
-  artifacts:
-    paths:
-    - $LSB_RELEASE/
-    target_paths: /binaries/$OS_NAME/$LSB_RELEASE/$ARCH
+#   artifacts:
+#     paths:
+#     - $LSB_RELEASE/
+#     target_paths: /binaries/$OS_NAME/$LSB_RELEASE/$ARCH
   apt:
     packages:
       - libcurl4-openssl-dev
