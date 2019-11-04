@@ -62,6 +62,7 @@ jobs:
         - RELEASE=xenial
       name: xenial-ppc64le
       before_install:
+        - __dots() { while true ; do echo -en . ; sleep 2 ; done } ; __dots &
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
         - command -v expect || sudo apt-get install expect
@@ -84,6 +85,7 @@ jobs:
         - RELEASE=xenial
       name: xenial-ppc64le
       before_install:
+        - __dots() { while true ; do echo -en . ; sleep 2 ; done } ; __dots &
         - sudo rm -rf /var/lib/apt/lists/lock /var/cache/apt/archives/lock /var/lib/dpkg/lock
         - sudo apt-get update
         - command -v expect || sudo apt-get install expect
@@ -107,7 +109,6 @@ env:
   - PATH="$HOME/.phpenv/bin:$HOME/.php-build/bin:$PATH"
 
 before_install:
-  - __dots() { while true ; do echo -en . ; sleep 2 ; done } ; __dots &
   - php -f test.php || true
 
 install:
